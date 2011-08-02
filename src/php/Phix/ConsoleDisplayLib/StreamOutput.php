@@ -1,5 +1,6 @@
 <?php
 /**
+ * Copyright (c) 2011 Stuart Herbert.
  * Copyright (c) 2010 Gradwell dot com Ltd.
  * All rights reserved.
  *
@@ -15,7 +16,7 @@
  *     the documentation and/or other materials provided with the
  *     distribution.
  *
- *   * Neither the name of Gradwell dot com Ltd nor the names of his
+ *   * Neither the names of the copyright holders nor the names of the
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -32,16 +33,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package     Gradwell
+ * @package     Phix
  * @subpackage  ConsoleDisplayLib
- * @author      Stuart Herbert <stuart.herbert@gradwell.com>
+ * @author      Stuart Herbert <stuart@stuartherbert.com>
+ * @copyright   2011 Stuart Herbert. www.stuartherbert.com
  * @copyright   2010 Gradwell dot com Ltd. www.gradwell.com
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link        http://gradwell.github.com
+ * @link        http://www.phix-project.org
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Gradwell\ConsoleDisplayLib;
+namespace Phix\ConsoleDisplayLib;
 
 class StreamOutput implements ConsoleOutputEngine
 {
