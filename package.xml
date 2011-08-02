@@ -4,15 +4,15 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
   <name>ConsoleDisplayLib</name>
-  <channel>pear.gradwell.com</channel>
+  <channel>pear.phix-project.org</channel>
   <summary>A simple library for CLI apps to output to the console</summary>
   <description>
     ConsoleDisplayLib is a simple reusable library for writing word-wrapped output to a terminal, possibly in colour.
   </description>
   <lead>
     <name>Stuart Herbert</name>
-    <user>stuartherbert</user>
-    <email>stuart.herbert@gradwell.com</email>
+    <user>stuart</user>
+    <email>stuart@stuartherbert.com</email>
     <active>yes</active>
   </lead>
   <date>${build.date}</date>
