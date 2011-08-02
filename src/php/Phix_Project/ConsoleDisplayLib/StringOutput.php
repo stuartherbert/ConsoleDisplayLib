@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (c) 2011 Stuart Herbert.
  * Copyright (c) 2010 Gradwell dot com Ltd.
@@ -34,23 +33,48 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package     Phix
+ * @package     Phix_Project
  * @subpackage  ConsoleDisplayLib
  * @author      Stuart Herbert <stuart@stuartherbert.com>
  * @copyright   2011 Stuart Herbert. www.stuartherbert.com
  * @copyright   2010 Gradwell dot com Ltd. www.gradwell.com
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link        http://www.phix-project.org/
+ * @link        http://www.phix-project.org
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib;
 
-class StdOutTest extends \PHPUnit_Framework_TestCase
+class StringOutput implements ConsoleOutputEngine
 {
-        public function testUsesStreamOutput()
+        public $output = '';
+        public $allowColors = false;
+
+        public function getColumnsHint()
         {
-                $stdout = new StdOut();
-                $this->assertTrue ($stdout->outputEngine instanceof StreamOutput);
+                return 78;
+        }
+
+        public function writePartialLine($stringToOutput)
+        {
+                $this->output .= $stringToOutput;
+        }
+
+        public function writeEmptyLines($eolsToWrite = 1)
+        {
+                $stringToOutput = '';
+                for ($i = 0; $i < $eolsToWrite; $i++)
+                {
+                        $stringToOutput .= \PHP_EOL;
+                }
+
+                $this->writePartialLine($stringToOutput);
+        }
+
+        public function supportsColors()
+        {
+                return $this->allowColors;
         }
 }
+
+?>

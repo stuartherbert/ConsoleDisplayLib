@@ -34,7 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package     Phix
+ * @package     Phix_Project
  * @subpackage  ConsoleDisplayLib
  * @author      Stuart Herbert <stuart@stuartherbert.com>
  * @copyright   2011 Stuart Herbert. www.stuartherbert.com
@@ -44,13 +44,13 @@
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib;
 
-class StdErr extends ConsoleDisplay
+class StdOut extends ConsoleDisplay
 {
         public function __construct()
         {
-                $outputEngine = new StreamOutput('php://stderr');
+                $outputEngine = new StreamOutput('php://stdout');
                 parent::__construct($outputEngine);
         }
 }

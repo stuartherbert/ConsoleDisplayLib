@@ -34,7 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package     Phix
+ * @package     Phix_Project
  * @subpackage  ConsoleDisplayLib
  * @author      Stuart Herbert <stuart@stuartherbert.com>
  * @copyright   2011 Stuart Herbert. www.stuartherbert.com
@@ -44,13 +44,13 @@
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib;
 
-class DevStringTest extends \PHPUnit_Framework_TestCase
+class StdOutTest extends \PHPUnit_Framework_TestCase
 {
-        public function testCanCreate()
+        public function testUsesStreamOutput()
         {
-                $output = new DevString();
-                $this->assertTrue ($output->outputEngine instanceof StringOutput);
+                $stdout = new StdOut();
+                $this->assertTrue ($stdout->outputEngine instanceof StreamOutput);
         }
 }

@@ -34,24 +34,73 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package     Phix
+ * @package     Phix_Project
  * @subpackage  ConsoleDisplayLib
  * @author      Stuart Herbert <stuart@stuartherbert.com>
  * @copyright   2011 Stuart Herbert. www.stuartherbert.com
  * @copyright   2010 Gradwell dot com Ltd. www.gradwell.com
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link        http://www.phix-project.org
+ * @link        http://www.phix-project.org/
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib;
 
-interface ConsoleOutputEngine
+class StringOutputTest extends \PHPUnit_Framework_TestCase
 {
-        public function getColumnsHint();
-        
-        public function writePartialLine($stringToOutput);
-        public function writeEmptyLines($eolsToWrite = 1);
+        public function testCanCreate()
+        {
+                $outputEngine = new StringOutput();
 
-        public function supportsColors();
+                // did it work?
+                $this->assertTrue ($outputEngine instanceof StringOutput);
+        }
+
+        public function testImplementsConsoleOutputEngineInterface()
+        {
+                $outputEngine = new StringOutput();
+
+                // did it work?
+                $this->assertTrue ($outputEngine instanceof ConsoleOutputEngine);
+        }
+
+        public function testCanWriteStrings()
+        {
+                // setup the test
+                $outputEngine = new StringOutput();
+                $testString = 'a test string';
+
+                // perform the test
+                $outputEngine->writePartialLine($testString);
+
+                // did it work?
+                $writtenString = $outputEngine->output;
+                $this->assertEquals($testString, $writtenString);
+        }
+
+        public function testCanWriteBlankLines()
+        {
+                // setup the test
+                $outputEngine = new StringOutput();
+                $expectedString = \PHP_EOL . \PHP_EOL;
+
+                // perform the test
+                $outputEngine->writeEmptyLines(2);
+
+                // did it work?
+                $writtenString = $outputEngine->output;
+                $this->assertEquals($expectedString, $writtenString);
+        }
+
+        public function testCanTestForColorSupport()
+        {
+                // setup the test
+                $outputEngine = new StringOutput();
+
+                // perform the test
+                $allowColors = $outputEngine->supportsColors();
+
+                // check the results
+                $this->assertTrue(is_bool($allowColors));
+        }
 }

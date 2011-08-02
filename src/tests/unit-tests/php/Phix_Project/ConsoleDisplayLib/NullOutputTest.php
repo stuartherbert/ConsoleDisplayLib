@@ -34,7 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package     Phix
+ * @package     Phix_Project
  * @subpackage  ConsoleDisplayLib
  * @author      Stuart Herbert <stuart@stuartherbert.com>
  * @copyright   2011 Stuart Herbert. www.stuartherbert.com
@@ -44,13 +44,63 @@
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib;
 
-class StdErrTest extends \PHPUnit_Framework_TestCase
+class NullOutputTest extends \PHPUnit_Framework_TestCase
 {
-        public function testUsesStreamOutput()
+        public function testCanCreate()
         {
-                $stderr = new StdErr();
-                $this->assertTrue ($stderr->outputEngine instanceof StreamOutput);
+                $outputEngine = new NullOutput();
+
+                // did it work?
+                $this->assertTrue ($outputEngine instanceof NullOutput);
+        }
+
+        public function testImplementsConsoleOutputEngineInterface()
+        {
+                $outputEngine = new NullOutput();
+
+                // did it work?
+                $this->assertTrue ($outputEngine instanceof ConsoleOutputEngine);
+        }
+
+        public function testCanWriteStrings()
+        {
+                // setup the test
+                $outputEngine = new NullOutput();
+                $testString = 'a test string';
+
+                // perform the test
+                $outputEngine->writePartialLine($testString);
+
+                // did it work?
+                // we assume it did for now
+                $this->assertTrue(true);
+        }
+
+        public function testCanWriteBlankLines()
+        {
+                // setup the test
+                $outputEngine = new NullOutput();
+                $expectedString = \PHP_EOL . \PHP_EOL;
+
+                // perform the test
+                $outputEngine->writeEmptyLines(2);
+
+                // did it work?
+                // we assume it did for now
+                $this->assertTrue(true);
+        }
+
+        public function testCanTestForColorSupport()
+        {
+                // setup the test
+                $outputEngine = new NullOutput();
+
+                // perform the test
+                $allowColors = $outputEngine->supportsColors();
+
+                // check the results
+                $this->assertFalse($allowColors);
         }
 }
