@@ -127,7 +127,7 @@ class StreamOutput implements ConsoleOutputEngine
                 return $screenWidth;
                 // @codeCoverageIgnoreEnd
         }
-        
+
         public function writePartialLine($stringToOutput)
         {
                 $fp = \fopen($this->target, 'a+');
@@ -168,7 +168,7 @@ class StreamOutput implements ConsoleOutputEngine
         {
                 $this->forceTty = true;
         }
-        
+
         protected function isatty()
         {
                 static $isTty = null;
@@ -190,11 +190,11 @@ class StreamOutput implements ConsoleOutputEngine
         protected function isReallyATty()
         {
                 static $isTty = null;
-                
+
                 if ($isTty === null)
                 {
                         $fp = \fopen($this->target, 'a+');
-                        $isTty = \posix_isatty($fp);
+                        $isTty = posix_isatty($fp);
                         fclose($fp);
                 }
 
@@ -202,4 +202,13 @@ class StreamOutput implements ConsoleOutputEngine
         }
 }
 
+// if the POSIX extension is missing for any reason, this will save the day
+
+if (!function_exists('posix_isatty'))
+{
+        function posix_isatty($dummy)
+        {
+                return false;
+        }
+}
 ?>
