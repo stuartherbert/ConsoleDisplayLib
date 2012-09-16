@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2011 Stuart Herbert.
+ * Copyright (c) 2011-present Stuart Herbert.
  * Copyright (c) 2010 Gradwell dot com Ltd.
  * All rights reserved.
  *
@@ -48,41 +48,6 @@ namespace Phix_Project\ConsoleDisplayLib;
 
 class ConsoleDisplay
 {
-        public $fgGray = 30;
-        public $fgBlack = 30;
-        public $fgRed = 31;
-        public $fgGreen = 32;
-        public $fgYellow = 33;
-        public $fgBlue = 34;
-        public $fgMagenta = 35;
-        public $fgCyan = 36;
-        public $fgWhite = 37;
-
-        public $bgGray = 40;
-        public $bgBlack = 40;
-        public $bgRed = 41;
-        public $bgGreen = 42;
-        public $bgYellow = 43;
-        public $bgBlue = 44;
-        public $bgMagenta = 45;
-        public $bgCyan = 46;
-        public $bgWhite = 47;
-
-        public $default = 0;
-        public $bold = 1;
-        public $faint = 2;
-        public $italic = 3;
-        public $underlined = 4;
-        public $doubleUnderlined = 21;
-        public $normal = 22;
-
-        /**
-         * Basic escape sequence string. Use sprintf() to insert escape codes.
-         *
-         * @var string
-         */
-        private $escapeSequence = "\033[%sm";
-
         protected $wrapAt = 78;
         protected $indent = 0;
 
@@ -102,17 +67,17 @@ class ConsoleDisplay
         {
                 if (\is_array($codes))
                 {
-                        return \sprintf($this->escapeSequence, \implode(';', $codes));
+                        return \sprintf(ConsoleColor::ESCAPE_SEQUENCE, \implode(';', $codes));
                 }
                 else
                 {
-                        return \sprintf($this->escapeSequence, $codes);
+                        return \sprintf(ConsoleColor::ESCAPE_SEQUENCE, $codes);
                 }
         }
 
         public function resetStyle()
         {
-                return \sprintf($this->escapeSequence, $this->default);
+                return \sprintf(ConsoleColor::ESCAPE_SEQUENCE, ConsoleColor::NONE);
         }
 
         public function output($colors, $string = null)
@@ -173,14 +138,14 @@ class ConsoleDisplay
         {
                 $this->wrapAt = $this->outputEngine->getColumnsHint();
         }
-        
+
         protected function writePartialLine($colors, $string)
         {
                 // create the string to output
                 $stringToWrite = '';
                 if ($this->outputEngine->supportsColors())
                 {
-                        $stringToWrite .= $colors;
+                        $stringToWrite .= $this->style($colors);
                 }
                 $stringToWrite .= $this->createWrappedStrings($string);
                 if ($this->outputEngine->supportsColors())
@@ -198,7 +163,7 @@ class ConsoleDisplay
                 $stringToWrite = '';
                 if ($this->outputEngine->supportsColors())
                 {
-                        $stringToWrite .= $colors;
+                        $stringToWrite .= $this->style($colors);
                 }
                 $stringToWrite .= $this->createWrappedStrings($string);
                 if ($this->outputEngine->supportsColors())
@@ -232,7 +197,7 @@ class ConsoleDisplay
 
                 // var_dump('createWrappedStrings called');
                 // var_dump($lastRtrim);
-                
+
                 $return = '';
                 $strings = \explode(PHP_EOL, $string);
                 $append = false;
@@ -255,7 +220,7 @@ class ConsoleDisplay
                                 $append = true;
                                 // var_dump('loop string: ' . $string);
                                 // var_dump('strlen(trim): '  . strlen(trim($string)));
-                                
+
                                 if (\strlen($string) > 0)
                                 {
                                         $return = $this->createWrappedString($string);
@@ -266,10 +231,10 @@ class ConsoleDisplay
                                                 $return = $lastRtrim . $return;
                                         }
                                 }
-                                
+
                                 $lastRtrim = '';
                         }
-                        
+
                 }
 
                 // is there whitespace we need to chop?
@@ -282,7 +247,7 @@ class ConsoleDisplay
                 // var_dump('rtrimmedString: ' . $rtrimmedString);
                 // var_dump('rtrimmedLen: ' . $rtrimmedLen);
                 // var_dump('returnLen: ' . $returnLen);
-                
+
                 if ($rtrimmedLen !== $returnLen)
                 {
                         $lastRtrim = substr($return, $rtrimmedLen);
@@ -291,7 +256,7 @@ class ConsoleDisplay
 
                 // var_dump('lastRtrim: ' . $lastRtrim);
                 // var_dump('return: ' . $return);
-                
+
                 // all done
                 return $return;
         }
