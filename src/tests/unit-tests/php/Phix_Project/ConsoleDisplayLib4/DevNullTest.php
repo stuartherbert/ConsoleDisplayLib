@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright (c) 2011 Stuart Herbert.
+ * Copyright (c) 2011-present Stuart Herbert.
  * Copyright (c) 2010 Gradwell dot com Ltd.
  * All rights reserved.
  *
@@ -16,7 +17,7 @@
  *     the documentation and/or other materials provided with the
  *     distribution.
  *
- *   * Neither the names of the copyright holders nor the names of the 
+ *   * Neither the names of the copyright holders nor the names of the
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -34,39 +35,24 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package     Phix_Project
- * @subpackage  ConsoleDisplayLib
+ * @subpackage  ConsoleDisplayLib4
  * @author      Stuart Herbert <stuart@stuartherbert.com>
- * @copyright   2011 Stuart Herbert. www.stuartherbert.com
+ * @copyright   2011-present Stuart Herbert. www.stuartherbert.com
  * @copyright   2010 Gradwell dot com Ltd. www.gradwell.com
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link        http://www.phix-project.org
+ * @link        http://www.phix-project.org/
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix_Project\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib4;
 
-class NullOutput implements ConsoleOutputEngine
+use PHPUnit_Framework_TestCase;
+
+class DevNullTest extends PHPUnit_Framework_TestCase
 {
-        public function getColumnsHint()
+        public function testCanCreate()
         {
-                // just in case it ever gets called!
-                return 78;
-        }
-        
-        public function writePartialLine($stringToOutput)
-        {
-                // do nothing
-        }
-
-        public function writeEmptyLines($eolsToWrite = 1)
-        {
-                // do nothing
-        }
-
-        public function supportsColors()
-        {
-                return false;
+                $output = new DevNull();
+                $this->assertTrue ($output->outputEngine instanceof NullOutput);
         }
 }
-
-?>

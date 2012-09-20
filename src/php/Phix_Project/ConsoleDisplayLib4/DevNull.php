@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2011 Stuart Herbert.
+ * Copyright (c) 2011-present Stuart Herbert.
  * Copyright (c) 2010 Gradwell dot com Ltd.
  * All rights reserved.
  *
@@ -35,22 +35,22 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package     Phix_Project
- * @subpackage  ConsoleDisplayLib
+ * @subpackage  ConsoleDisplayLib4
  * @author      Stuart Herbert <stuart@stuartherbert.com>
- * @copyright   2011 Stuart Herbert. www.stuartherbert.com
+ * @copyright   2011-present Stuart Herbert. www.stuartherbert.com
  * @copyright   2010 Gradwell dot com Ltd. www.gradwell.com
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link        http://www.phix-project.org
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix_Project\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib4;
 
-class StdErr extends ConsoleDisplay
+class DevNull extends ConsoleDisplay
 {
         public function __construct()
         {
-                $outputEngine = new StreamOutput('php://stderr');
+                $outputEngine = new NullOutput();
                 parent::__construct($outputEngine);
         }
 }
