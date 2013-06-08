@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2011 Stuart Herbert.
+ * Copyright (c) 2011-present Stuart Herbert.
  * Copyright (c) 2010 Gradwell dot com Ltd.
  * All rights reserved.
  *
@@ -35,16 +35,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package     Phix_Project
- * @subpackage  ConsoleDisplayLib
+ * @subpackage  ConsoleDisplayLib4
  * @author      Stuart Herbert <stuart@stuartherbert.com>
- * @copyright   2011 Stuart Herbert. www.stuartherbert.com
+ * @copyright   2011-present Stuart Herbert. www.stuartherbert.com
  * @copyright   2010 Gradwell dot com Ltd. www.gradwell.com
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link        http://www.phix-project.org/
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix_Project\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib4;
+
+use PHPUnit_Framework_TestCase;
 
 if (!function_exists('ncurses_init'))
 {
@@ -75,7 +77,7 @@ if (!function_exists('ncurses_init'))
         }
 }
 
-class StreamOutputTest extends \PHPUnit_Framework_TestCase
+class StreamOutputTest extends PHPUnit_Framework_TestCase
 {
         public function testCanCreate()
         {
@@ -172,7 +174,7 @@ class StreamOutputTest extends \PHPUnit_Framework_TestCase
                 //
                 // and if we set COLUMNS to something sensible?
                 //
-                
+
                 putenv('COLUMNS=10');
                 $outputEngine = new StreamOutput('php://stdout');
                 $outputEngine->forceTty();

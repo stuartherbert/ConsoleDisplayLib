@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2011 Stuart Herbert.
+ * Copyright (c) 2011-present Stuart Herbert.
  * Copyright (c) 2010 Gradwell dot com Ltd.
  * All rights reserved.
  *
@@ -35,22 +35,74 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package     Phix_Project
- * @subpackage  ConsoleDisplayLib
+ * @subpackage  ConsoleDisplayLib4
  * @author      Stuart Herbert <stuart@stuartherbert.com>
- * @copyright   2011 Stuart Herbert. www.stuartherbert.com
+ * @copyright   2011-present Stuart Herbert. www.stuartherbert.com
  * @copyright   2010 Gradwell dot com Ltd. www.gradwell.com
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link        http://www.phix-project.org/
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix_Project\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib4;
 
-class DevStringTest extends \PHPUnit_Framework_TestCase
+use PHPUnit_Framework_TestCase;
+
+class NullOutputTest extends PHPUnit_Framework_TestCase
 {
         public function testCanCreate()
         {
-                $output = new DevString();
-                $this->assertTrue ($output->outputEngine instanceof StringOutput);
+                $outputEngine = new NullOutput();
+
+                // did it work?
+                $this->assertTrue ($outputEngine instanceof NullOutput);
+        }
+
+        public function testImplementsConsoleOutputEngineInterface()
+        {
+                $outputEngine = new NullOutput();
+
+                // did it work?
+                $this->assertTrue ($outputEngine instanceof ConsoleOutputEngine);
+        }
+
+        public function testCanWriteStrings()
+        {
+                // setup the test
+                $outputEngine = new NullOutput();
+                $testString = 'a test string';
+
+                // perform the test
+                $outputEngine->writePartialLine($testString);
+
+                // did it work?
+                // we assume it did for now
+                $this->assertTrue(true);
+        }
+
+        public function testCanWriteBlankLines()
+        {
+                // setup the test
+                $outputEngine = new NullOutput();
+                $expectedString = \PHP_EOL . \PHP_EOL;
+
+                // perform the test
+                $outputEngine->writeEmptyLines(2);
+
+                // did it work?
+                // we assume it did for now
+                $this->assertTrue(true);
+        }
+
+        public function testCanTestForColorSupport()
+        {
+                // setup the test
+                $outputEngine = new NullOutput();
+
+                // perform the test
+                $allowColors = $outputEngine->supportsColors();
+
+                // check the results
+                $this->assertFalse($allowColors);
         }
 }

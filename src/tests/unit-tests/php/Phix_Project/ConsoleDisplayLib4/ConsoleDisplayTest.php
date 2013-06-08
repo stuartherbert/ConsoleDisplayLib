@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2011 Stuart Herbert.
+ * Copyright (c) 2011-present Stuart Herbert.
  * Copyright (c) 2010 Gradwell dot com Ltd.
  * All rights reserved.
  *
@@ -35,23 +35,25 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package     Phix_Project
- * @subpackage  ConsoleDisplayLib
+ * @subpackage  ConsoleDisplayLib4
  * @author      Stuart Herbert <stuart@stuartherbert.com>
- * @copyright   2011 Stuart Herbert. www.stuartherbert.com
+ * @copyright   2011-present Stuart Herbert. www.stuartherbert.com
  * @copyright   2010 Gradwell dot com Ltd. www.gradwell.com
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link        http://www.phix-project.org
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix_Project\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib4;
 
-class ConsoleDisplayTest extends \PHPUnit_Framework_TestCase
+use PHPUnit_Framework_TestCase;
+
+class ConsoleDisplayTest extends PHPUnit_Framework_TestCase
 {
         public function testCanGenerateSingleStyle()
         {
                 $consoleDisplay = new DevString();
-                $output = $consoleDisplay->style($consoleDisplay->bold);
+                $output = $consoleDisplay->style(ConsoleColor::BOLD);
 
                 $expectedValue = "\033[1m";
                 $this->assertEquals($expectedValue, $output);
@@ -60,7 +62,7 @@ class ConsoleDisplayTest extends \PHPUnit_Framework_TestCase
         public function testCanGenerateSeveralStyles()
         {
                 $consoleDisplay = new DevString();
-                $output = $consoleDisplay->style(array($consoleDisplay->bold, $consoleDisplay->fgRed));
+                $output = $consoleDisplay->style(array(ConsoleColor::BOLD, ConsoleColor::RED_FG));
 
                 $expectedValue = "\033[1;31m";
                 $this->assertEquals($expectedValue, $output);
@@ -101,10 +103,10 @@ class ConsoleDisplayTest extends \PHPUnit_Framework_TestCase
                 $outputEngine =
                 $consoleDisplay = new DevString(true);
 
-                $consoleDisplay->output($consoleDisplay->bgBlack, $testString);
+                $consoleDisplay->output(ConsoleColor::BLACK_BG, $testString);
                 $output = $consoleDisplay->_getOutput();
 
-                $this->assertEquals($consoleDisplay->bgBlack . $testString . $consoleDisplay->resetStyle(), $output);
+                $this->assertEquals($consoleDisplay->style(ConsoleColor::BLACK_BG) . $testString . $consoleDisplay->resetStyle(), $output);
         }
 
         public function testDoesNotOutputColorIfEngineDoesNotSupportColor()
@@ -112,7 +114,7 @@ class ConsoleDisplayTest extends \PHPUnit_Framework_TestCase
                 $testString = 'test string';
                 $consoleDisplay = new DevString(false);
 
-                $consoleDisplay->output($consoleDisplay->bgBlack, $testString);
+                $consoleDisplay->output(ConsoleColor::BLACK_BG, $testString);
                 $outputWithNoColour = $consoleDisplay->_getOutput();
 
                 $this->assertEquals($testString, $outputWithNoColour);
@@ -122,10 +124,10 @@ class ConsoleDisplayTest extends \PHPUnit_Framework_TestCase
 
                 $consoleDisplay = new DevString(true);
 
-                $consoleDisplay->output($consoleDisplay->bgBlack, $testString);
+                $consoleDisplay->output(ConsoleColor::BLACK_BG, $testString);
                 $outputWithColour = $consoleDisplay->_getOutput();
 
-                $this->assertEquals($consoleDisplay->bgBlack . $testString . $consoleDisplay->resetStyle(), $outputWithColour);
+                $this->assertEquals($consoleDisplay->style(ConsoleColor::BLACK_BG) . $testString . $consoleDisplay->resetStyle(), $outputWithColour);
 
                 $this->assertNotEquals($outputWithColour, $outputWithNoColour);
         }
@@ -135,7 +137,7 @@ class ConsoleDisplayTest extends \PHPUnit_Framework_TestCase
                 $testString = 'test string';
                 $consoleDisplay = new DevString(false);
 
-                $consoleDisplay->outputLine($consoleDisplay->bgBlack, $testString);
+                $consoleDisplay->outputLine(ConsoleColor::BLACK_BG, $testString);
                 $output = $consoleDisplay->_getOutput();
 
                 $this->assertEquals($testString . \PHP_EOL, $output);
@@ -158,8 +160,8 @@ class ConsoleDisplayTest extends \PHPUnit_Framework_TestCase
                 $testString2 = ' + test string 2';
                 $consoleDisplay = new DevString(false);
 
-                $consoleDisplay->output($consoleDisplay->bgBlack, $testString1);
-                $consoleDisplay->outputLine($consoleDisplay->bgBlack, $testString2);
+                $consoleDisplay->output(ConsoleColor::BLACK_BG, $testString1);
+                $consoleDisplay->outputLine(ConsoleColor::BLACK_BG, $testString2);
                 $output = $consoleDisplay->_getOutput();
 
                 $this->assertEquals($testString1 . $testString2 . \PHP_EOL, $output);
@@ -172,12 +174,12 @@ class ConsoleDisplayTest extends \PHPUnit_Framework_TestCase
 
                 $consoleDisplay = new DevString(true);
 
-                $consoleDisplay->output($consoleDisplay->fgRed, $testString1);
-                $consoleDisplay->outputLine($consoleDisplay->fgCyan, $testString2);
+                $consoleDisplay->output(ConsoleColor::RED_FG, $testString1);
+                $consoleDisplay->outputLine(ConsoleColor::CYAN_FG, $testString2);
                 $output = $consoleDisplay->_getOutput();
 
-                $expectedResult = $consoleDisplay->fgRed . $testString1 . $consoleDisplay->resetStyle()
-                                . $consoleDisplay->fgCyan . $testString2 . $consoleDisplay->resetStyle()
+                $expectedResult = $consoleDisplay->style(ConsoleColor::RED_FG) . $testString1 . $consoleDisplay->resetStyle()
+                                . $consoleDisplay->style(ConsoleColor::CYAN_FG) . $testString2 . $consoleDisplay->resetStyle()
                                 . \PHP_EOL;
 
                 $this->assertEquals($expectedResult, $output);
@@ -198,7 +200,7 @@ class ConsoleDisplayTest extends \PHPUnit_Framework_TestCase
                 $testString = 'test string';
                 $consoleDisplay = new DevString(false);
 
-                $consoleDisplay->output($consoleDisplay->bgBlack, $testString);
+                $consoleDisplay->output(ConsoleColor::BLACK_BG, $testString);
                 $consoleDisplay->outputBlankLine();
                 $output = $consoleDisplay->_getOutput();
 
@@ -330,7 +332,7 @@ class ConsoleDisplayTest extends \PHPUnit_Framework_TestCase
 
                 $this->assertEquals('1234567890' . \PHP_EOL . '1234567890', $output);
         }
-        
+
         public function testWillOutputEolsAndWrapWhenAppendingStrings()
         {
                 $consoleDisplay = new DevString();

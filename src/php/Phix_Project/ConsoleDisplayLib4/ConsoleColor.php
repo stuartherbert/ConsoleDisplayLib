@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2011 Stuart Herbert.
+ * Copyright (c) 2011-present Stuart Herbert.
  * Copyright (c) 2010 Gradwell dot com Ltd.
  * All rights reserved.
  *
@@ -17,7 +17,7 @@
  *     the documentation and/or other materials provided with the
  *     distribution.
  *
- *   * Neither the names of the copyright holders nor the names of the
+ *   * Neither the name of the copyright holders nor the names of the
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -35,22 +35,51 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package     Phix_Project
- * @subpackage  ConsoleDisplayLib
+ * @subpackage  ConsoleDisplayLib4
  * @author      Stuart Herbert <stuart@stuartherbert.com>
- * @copyright   2011 Stuart Herbert. www.stuartherbert.com
+ * @copyright   2011-present Stuart Herbert. www.stuartherbert.com
  * @copyright   2010 Gradwell dot com Ltd. www.gradwell.com
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link        http://www.phix-project.org
  * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Phix_Project\ConsoleDisplayLib;
+namespace Phix_Project\ConsoleDisplayLib4;
 
-class StdOut extends ConsoleDisplay
+class ConsoleColor
 {
-        public function __construct()
-        {
-                $outputEngine = new StreamOutput('php://stdout');
-                parent::__construct($outputEngine);
-        }
+        const GRAY_FG = 30;
+        const BLACK_FG = 30;
+        const RED_FG = 31;
+        const GREEN_FG = 32;
+        const YELLOW_FG = 33;
+        const BLUE_FG = 34;
+        const MAGENTA_FG = 35;
+        const CYAN_FG = 36;
+        const WHITE_FG = 37;
+
+        const GRAY_BG = 40;
+        const BLACK_BG = 40;
+        const RED_BG = 41;
+        const GREEN_BG = 42;
+        const YELLOW_BG = 43;
+        const BLUE_BG = 44;
+        const MAGENTA_BG = 45;
+        const CYAN_BG = 46;
+        const WHITE_BG = 47;
+
+        const NONE = 0;
+        const BOLD = 1;
+        const FAINT = 2;
+        const ITALIC = 3;
+        const UNDERLINED = 4;
+        const DOUBLE_UNDERLINED = 21;
+        const NORMAL = 22;
+
+        /**
+         * Basic escape sequence string. Use sprintf() to insert escape codes.
+         *
+         * @var string
+         */
+        const ESCAPE_SEQUENCE = "\033[%sm";
 }
