@@ -1,6 +1,6 @@
 {
-	"name": "phix/consoledisplaylib4",
-	"description": "consoledisplaylib4 is a simple library for CLI apps to output to the console",
+	"name": "phix/consoledisplaylib",
+	"description": "ConsoleDisplayLib is a simple library for CLI apps to output to the console",
 	"keywords": [
 		"console",
 		"output",
@@ -25,6 +25,6 @@
 		"psr-0": { "" : "src/php/" }
 	},
 	"require-dev": {
-		"phix/autoloader4": "4.*"
+		"phix/autoloader": "4.*"
 	}
 }
